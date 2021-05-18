@@ -290,7 +290,7 @@ class RdfDslGenerator extends AbstractGenerator {
 			Mult: exp.left.computeExp*exp.right.computeExp
 			Div: exp.left.computeExp/exp.right.computeExp
 			Num: exp.value
-			default: throw new Error("Internal error")
+			default: throw new Error("Error in query expression")
 		}
 	}
 
