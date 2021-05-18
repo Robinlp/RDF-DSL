@@ -45,6 +45,7 @@ data
 		amountOfGlasses 1
 		hasCourse "Machine Learning" 
 		hasCourse "MDSD"
+		
 query 
 	from uni "http://sdu.dk#"
 	from people "http://MDSD.dk/our_group_data#"
@@ -68,5 +69,10 @@ query
 			SELECT Student
 			 WHERE 
 			 	Student uni:hasName sadik
+ 		
+ 		amountOfGlasses
+ 			SELECT Student
+ 			WHERE 
+ 				Student uni:amountOfGlasses 10+10+20/2+2*10+30-20-2*5 + ((3*9+1)*0)
 			 
 	 	

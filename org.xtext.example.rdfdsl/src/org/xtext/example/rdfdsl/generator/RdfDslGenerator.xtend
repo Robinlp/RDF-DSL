@@ -34,6 +34,13 @@ import org.xtext.example.rdfdsl.rdfDsl.QueryLiteral
 import org.xtext.example.rdfdsl.rdfDsl.QueryBool
 import org.xtext.example.rdfdsl.rdfDsl.QueryInstance
 import org.xtext.example.rdfdsl.rdfDsl.QueryNamespace
+import org.xtext.example.rdfdsl.rdfDsl.QueryExpression
+import org.xtext.example.rdfdsl.rdfDsl.Expression
+import org.xtext.example.rdfdsl.rdfDsl.Plus
+import org.xtext.example.rdfdsl.rdfDsl.Minus
+import org.xtext.example.rdfdsl.rdfDsl.Mult
+import org.xtext.example.rdfdsl.rdfDsl.Div
+import org.xtext.example.rdfdsl.rdfDsl.Num
 
 /**
  * Generates code from your model files on save.
@@ -272,5 +279,19 @@ class RdfDslGenerator extends AbstractGenerator {
 	def dispatch String generate(QueryLiteral queryLit) '''"«queryLit.id»"'''
 
 	def dispatch String generate(QueryBool queryBool) '''«queryBool.id»'''
+	
+	def dispatch String generate(QueryExpression queryExpression) '''«computeExp(queryExpression.id)»'''
+	
+	
+	def int computeExp(Expression exp) {
+		switch exp {
+			Plus: exp.left.computeExp+exp.right.computeExp
+			Minus: exp.left.computeExp-exp.right.computeExp
+			Mult: exp.left.computeExp*exp.right.computeExp
+			Div: exp.left.computeExp/exp.right.computeExp
+			Num: exp.value
+			default: throw new Error("Internal error")
+		}
+	}
 
 }

@@ -91,16 +91,31 @@ Predicate:
 	namespace=ID ':' property=ID;
 
 QueryObject:
-	{QueryID} id=ID | {QueryLiteral} id=STRING | {QueryBool} id=BOOL;
+	{QueryID} id=ID | {QueryLiteral} id=STRING | {QueryBool} id=BOOL | {QueryExpression} id=Exp;
 
 
+//##################################################[Math expressions]##################################################
+
+Exp returns Expression:
+	Factor (('+' {Plus.left=current} | '-' {Minus.left=current} ) right=Factor)*
+;
+
+Factor returns Expression:
+	Primary (('*' {Mult.left=current} | '/' {Div.left=current} ) right=Primary)*
+;
+
+Primary returns Expression:
+	Number | Parenthesis
+;
 
 
+Parenthesis returns Expression:
+	'(' Exp ')'
+;
 
-
-
-
-
+Number:
+	{Num} value=INT
+;
 
 
 
