@@ -6,6 +6,11 @@ package org.xtext.example.rdfdsl.validation
 import org.eclipse.xtext.validation.Check
 import org.xtext.example.rdfdsl.rdfDsl.QueryInstance
 import org.xtext.example.rdfdsl.rdfDsl.RdfDslPackage
+import org.xtext.example.rdfdsl.rdfDsl.PropertyBinding
+import org.xtext.example.rdfdsl.rdfDsl.Binding
+import org.xtext.example.rdfdsl.rdfDsl.DataNamespace
+import java.util.List
+import java.util.ArrayList
 
 /**
  * This class contains custom validation rules. 
@@ -17,6 +22,7 @@ class RdfDslValidator extends AbstractRdfDslValidator {
 	public static String[] Python_Keywords = #["and", "as", "assert", "break", "class", "continue", "def", "del",
 		"elif", "else", "except", "False", "finally", "for", "from", "global", "if", "import", "in", "is", "lambda",
 		"None", "nonlocal", "not", "or", "pass", "raise", "return", "True", "try", "while", "with", "yield"]
+	public List<String> allBindings = new ArrayList();
 
 	@Check
 	def idContainsKeyword(QueryInstance qins) {
@@ -32,4 +38,25 @@ class RdfDslValidator extends AbstractRdfDslValidator {
 			}
 		}
 	}
+	
+	/*Find all bindings and add them to the allBindings list so bindingHasBeenDefined can use the list */
+	@Check
+	def findFindings(DataNamespace dataNs){
+		allBindings.clear()
+		for (binding : dataNs.bindings){
+			for(varL : binding.varList){
+				allBindings.addAll(varL)
+			}
+		}
+	}
+	
+	/*this method will validate if the proberty binding has been defined as a binding first */
+	@Check
+	def bindingHasBeenDefined(PropertyBinding pb){
+		System.out.println(allBindings)
+		if(!allBindings.contains(pb.name)){
+			error("The property binding has not been defined as a binding. Error at: " + pb.name, RdfDslPackage.Literals.PROPERTY_BINDING__NAME,"PropertyBinding error")
+		}
+	}
+	
 }

@@ -13,6 +13,7 @@ data
     from "http://sdu.dk#" [amountOfGlasses, hasName, hasCourse, Student, Engineer, Mathematician, hasGlasses]
     
     robin, emil, jeppe, nick, sadik is Engineer
+	hugo is Mathematician
 	
 	sadik:
 		hasName "Sadik"
@@ -26,6 +27,8 @@ data
 		amountOfGlasses 1
 		hasCourse "V&V"  
 		hasCourse "MDSD" 
+	hugo:
+		hasName "Hugo"
 	jeppe:
 		hasName "Jeppe"
 		hasGlasses True
@@ -45,7 +48,9 @@ data
 		amountOfGlasses 1
 		hasCourse "Machine Learning" 
 		hasCourse "MDSD"
-		
+	 bobby:
+		hasName "Bobby" 
+		 
 query 
 	from uni "http://sdu.dk#"
 	from people "http://MDSD.dk/our_group_data#"
