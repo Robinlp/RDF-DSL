@@ -97,7 +97,7 @@ class RdfDslGenerator extends AbstractGenerator {
 			parent = OWL.Class
 			_type = RDF.type
 		«ELSE»
-			parent = ns['«_class.superClass»']
+			parent = ns['«_class.superClass.name»']
 			_type = RDFS.subClassOf
 		«ENDIF»		
 		_class = ns['«_class.name»']

@@ -7,10 +7,12 @@ model namespace uni "http://sdu.dk"
 	 	property hasCourse String
 	class Engineer : Student
 	class Mathematician: Student
+		property hasCalculator Boolean 
+	//class Example: NotAStudent
 
 data
     namespace group "http://MDSD.dk/our_group_data#"
-    from "http://sdu.dk#" [amountOfGlasses, hasName, hasCourse, Student, Engineer, Mathematician, hasGlasses]
+    from "http://sdu.dk#" [amountOfGlasses, hasName, hasCourse, Student, Engineer, Mathematician, hasGlasses, hasCalculator]
     
     robin, emil, jeppe, nick, sadik is Engineer
 	hugo is Mathematician
@@ -26,9 +28,10 @@ data
 		hasGlasses True
 		amountOfGlasses 1
 		hasCourse "V&V"  
-		hasCourse "MDSD" 
+		hasCourse "MDSD"
 	hugo:
 		hasName "Hugo"
+		hasCalculator True
 	jeppe:
 		hasName "Jeppe"
 		hasGlasses True
@@ -48,8 +51,8 @@ data
 		amountOfGlasses 1
 		hasCourse "Machine Learning" 
 		hasCourse "MDSD"
-	 bobby:
-		hasName "Bobby" 
+	 //bobby:
+		//hasName "Bobby" 
 		 
 query 
 	from uni "http://sdu.dk#"
