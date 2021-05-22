@@ -22,31 +22,22 @@ import java.util.Collections
  * on how and when to use it.
  */
 class RdfDslScopeProvider extends AbstractRdfDslScopeProvider {
-	/*
-	override IScope getScope (EObject context, EReference reference){
-		switch context{
-			_Class case reference==Literals._CLASS__SUPER_CLASS : {
-				val model = EcoreUtil2.getContainerOfType(context,Namespace)
-				val c = EcoreUtil2.getContainerOfType(context,_Class)
+	override IScope getScope(EObject context, EReference reference) {
+		switch context {
+			_Class case reference == Literals._CLASS__SUPER_CLASS: {
+				val model = EcoreUtil2.getContainerOfType(context, Namespace)
 				val candidates = new ArrayList<_Class>
-				for(clss : model.classes){
-					val seen = new HashSet<_Class>
-					if(!clss.equals(c)){
-						var currentC = clss
-						while(currentC !== null){
-							if(seen.contains(currentC)){
-								return Scopes.scopeFor(Collections.EMPTY_LIST)
-							}
-							seen.add(currentC)
-							
-							candidates.add(currentC)
-						}
-						
+
+				for (clss : model.classes) {
+					// val seen = new HashSet<_Class>
+					if (!clss.equals(context)) {
+						candidates.add(clss)
 					}
+
 				}
-				
+
 				return Scopes.scopeFor(candidates)
 			}
 		}
-	}*/
+	}
 }
