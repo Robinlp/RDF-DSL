@@ -97,10 +97,10 @@ QueryObject:
 //##################################################[Math expressions]##################################################
 
 Exp returns Expression:
-	Factor (('+' {Plus.left=current} | '-' {Minus.left=current} ) right=Factor)*
+	MultDiv (('+' {Plus.left=current} | '-' {Minus.left=current} ) right=MultDiv)*
 ;
 
-Factor returns Expression:
+MultDiv returns Expression:
 	Primary (('*' {Mult.left=current} | '/' {Div.left=current} ) right=Primary)*
 ;
 
@@ -113,7 +113,7 @@ Parenthesis returns Expression:
 	'(' Exp ')'
 ;
 
-Number:
+Number returns Expression:
 	{Num} value=INT
 ;
 

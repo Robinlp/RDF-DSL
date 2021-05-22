@@ -3,6 +3,17 @@
  */
 package org.xtext.example.rdfdsl.scoping
 
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.xtext.example.rdfdsl.rdfDsl._Class
+import org.xtext.example.rdfdsl.rdfDsl.RdfDslPackage.Literals
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.scoping.Scopes
+import org.xtext.example.rdfdsl.rdfDsl.Namespace
+import java.util.ArrayList
+import java.util.HashSet
+import java.util.Collections
 
 /**
  * This class contains custom scoping description.
@@ -11,5 +22,31 @@ package org.xtext.example.rdfdsl.scoping
  * on how and when to use it.
  */
 class RdfDslScopeProvider extends AbstractRdfDslScopeProvider {
-
+	/*
+	override IScope getScope (EObject context, EReference reference){
+		switch context{
+			_Class case reference==Literals._CLASS__SUPER_CLASS : {
+				val model = EcoreUtil2.getContainerOfType(context,Namespace)
+				val c = EcoreUtil2.getContainerOfType(context,_Class)
+				val candidates = new ArrayList<_Class>
+				for(clss : model.classes){
+					val seen = new HashSet<_Class>
+					if(!clss.equals(c)){
+						var currentC = clss
+						while(currentC !== null){
+							if(seen.contains(currentC)){
+								return Scopes.scopeFor(Collections.EMPTY_LIST)
+							}
+							seen.add(currentC)
+							
+							candidates.add(currentC)
+						}
+						
+					}
+				}
+				
+				return Scopes.scopeFor(candidates)
+			}
+		}
+	}*/
 }
