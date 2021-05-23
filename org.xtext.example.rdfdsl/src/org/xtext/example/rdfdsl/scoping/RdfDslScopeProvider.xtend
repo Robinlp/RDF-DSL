@@ -14,6 +14,8 @@ import org.xtext.example.rdfdsl.rdfDsl.Namespace
 import java.util.ArrayList
 import java.util.HashSet
 import java.util.Collections
+import java.util.List
+
 
 /**
  * This class contains custom scoping description.
@@ -25,19 +27,38 @@ class RdfDslScopeProvider extends AbstractRdfDslScopeProvider {
 	override IScope getScope(EObject context, EReference reference) {
 		switch context {
 			_Class case reference == Literals._CLASS__SUPER_CLASS: {
-				val model = EcoreUtil2.getContainerOfType(context, Namespace)
-				val candidates = new ArrayList<_Class>
-
-				for (clss : model.classes) {
-					// val seen = new HashSet<_Class>
-					if (!clss.equals(context)) {
-						candidates.add(clss)
+				var model = EcoreUtil2.getContainerOfType(context, Namespace)
+				var candidates = new ArrayList<_Class>
+				
+				for (cl : model.classes) {
+					if (!cl.equals(context)) {
+						candidates.add(cl)
 					}
-
 				}
-
+				
 				return Scopes.scopeFor(candidates)
 			}
 		}
 	}
+
+/*def List<_Class> allSuperClasses(_Class theClass){
+ * 	var seen = new HashSet<_Class>
+ * 	var candidates = new ArrayList<_Class>
+ * 	var c = theClass
+ * 	//System.out.println("c before "+c.name)
+ * 	//System.out.println("c.super "+c.superClass)
+ * 	while(c !== null){
+ * 		if(seen.contains(c)){
+ * 			return Collections.EMPTY_LIST
+ * 		}
+ * 		seen.add(c)
+ * 		candidates.add(c)
+ * 		c = c.superClass
+ * 		System.out.println("c "+c)
+ * 		System.out.println("seen "+seen)
+ * 		System.out.println("candidates "+candidates)
+ * 	}
+ * 	return candidates
+ * 	
+ }*/
 }

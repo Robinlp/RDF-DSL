@@ -23,7 +23,7 @@ Namespace:
 	'namespace' name=ID link=Link (classes+=Class)*;
 
 Class returns _Class:
-	'class' name=ID (':' superClass=[_Class])? (properties+=Property)*;
+	{_Class}'class' name=ID (':' superClass=[_Class])? (properties+=Property)*;
 
 Property returns _Property:
 	'property' name=ID type=(ObjectType | SimpleType) (cardinality=Cardinality)?; // default card is 0..*

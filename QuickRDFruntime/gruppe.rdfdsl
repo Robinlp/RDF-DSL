@@ -5,15 +5,14 @@ model namespace uni "http://sdu.dk"
 	 	property hasGlasses Boolean
 	 	property hasName String
 	 	property hasCourse String
-	class Engineer : Student
+	class Engineer : Student 
 	class Mathematician: Student
 		property hasCalculator Boolean 
-	class Physicist : Mathematician 
+	class Physicist : Mathematician
 	class A : B 
-	class B : A
-	class C 
-	
-	//class Example: NotAStudent
+	class B : A  
+	   
+	class Example: NotAStudentInScope
 
 data
     namespace group "http://MDSD.dk/our_group_data#"

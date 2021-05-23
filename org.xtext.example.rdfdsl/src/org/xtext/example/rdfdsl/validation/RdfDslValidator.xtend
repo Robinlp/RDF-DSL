@@ -11,6 +11,9 @@ import org.xtext.example.rdfdsl.rdfDsl.Binding
 import org.xtext.example.rdfdsl.rdfDsl.DataNamespace
 import java.util.List
 import java.util.ArrayList
+import org.xtext.example.rdfdsl.rdfDsl._Class
+import java.util.HashSet
+import java.util.Collections
 
 /**
  * This class contains custom validation rules. 
@@ -26,37 +29,54 @@ class RdfDslValidator extends AbstractRdfDslValidator {
 
 	@Check
 	def idContainsKeyword(QueryInstance qins) {
-		if (Python_Keywords.contains(qins.id)){
+		if (Python_Keywords.contains(qins.id)) {
 			error('Name cannot contain python keywords', RdfDslPackage.Literals.QUERY_INSTANCE__ID, "Keyword Error")
 		}
 	}
+
 	@Check
 	def paramsContainsKeyword(QueryInstance qins) {
-		for(param : qins.params){
-			if(Python_Keywords.contains(param)){
-				error('Parameters cannot contain python keywords. Error at: ' + param, RdfDslPackage.Literals.QUERY_INSTANCE__PARAMS, "Keyword Error")
+		for (param : qins.params) {
+			if (Python_Keywords.contains(param)) {
+				error('Parameters cannot contain python keywords. Error at: ' + param,
+					RdfDslPackage.Literals.QUERY_INSTANCE__PARAMS, "Keyword Error")
 			}
 		}
 	}
-	
+
 	/*Find all bindings and add them to the allBindings list so bindingHasBeenDefined can use the list */
 	@Check
-	def findFindings(DataNamespace dataNs){
+	def findFindings(DataNamespace dataNs) {
 		allBindings.clear()
-		for (binding : dataNs.bindings){
-			for(varL : binding.varList){
+		for (binding : dataNs.bindings) {
+			for (varL : binding.varList) {
 				allBindings.addAll(varL)
 			}
 		}
 	}
-	
+
 	/*this method will validate if the proberty binding has been defined as a binding first */
 	@Check
-	def bindingHasBeenDefined(PropertyBinding pb){
-		System.out.println(allBindings)
-		if(!allBindings.contains(pb.name)){
-			error("The property binding has not been defined as a binding. Error at: " + pb.name, RdfDslPackage.Literals.PROPERTY_BINDING__NAME,"PropertyBinding error")
+	def bindingHasBeenDefined(PropertyBinding pb) {
+		// System.out.println(allBindings)
+		if (!allBindings.contains(pb.name)) {
+			error("The property binding has not been defined as a binding. Error at: " + pb.name,
+				RdfDslPackage.Literals.PROPERTY_BINDING__NAME, "PropertyBinding error")
 		}
 	}
-	
+
+	@Check
+	def checkCyclicInheritance(_Class theClass) {
+		var seen = new HashSet<_Class>
+		var c = theClass
+		while (c !== null) {
+			if (seen.contains(c)) {
+				error("cyclic inheritance", RdfDslPackage.Literals._CLASS__SUPER_CLASS, "superClass error")
+				return
+			}
+			seen.add(c)
+			c = c.superClass
+		}
+	}
+
 }
