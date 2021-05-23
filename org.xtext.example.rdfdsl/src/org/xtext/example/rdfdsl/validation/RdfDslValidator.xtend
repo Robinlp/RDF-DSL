@@ -3,17 +3,15 @@
  */
 package org.xtext.example.rdfdsl.validation
 
+import java.util.ArrayList
+import java.util.HashSet
+import java.util.List
 import org.eclipse.xtext.validation.Check
+import org.xtext.example.rdfdsl.rdfDsl.DataNamespace
+import org.xtext.example.rdfdsl.rdfDsl.PropertyBinding
 import org.xtext.example.rdfdsl.rdfDsl.QueryInstance
 import org.xtext.example.rdfdsl.rdfDsl.RdfDslPackage
-import org.xtext.example.rdfdsl.rdfDsl.PropertyBinding
-import org.xtext.example.rdfdsl.rdfDsl.Binding
-import org.xtext.example.rdfdsl.rdfDsl.DataNamespace
-import java.util.List
-import java.util.ArrayList
 import org.xtext.example.rdfdsl.rdfDsl._Class
-import java.util.HashSet
-import java.util.Collections
 
 /**
  * This class contains custom validation rules. 

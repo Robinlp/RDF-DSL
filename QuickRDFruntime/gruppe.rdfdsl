@@ -9,11 +9,10 @@ model namespace uni "http://sdu.dk"
 	class Mathematician: Student
 		property hasCalculator Boolean 
 	class Physicist : Mathematician
-	class A : B 
-	class B : A  
-	   
-	class Example: NotAStudentInScope
-
+	class A : B //cyclic inheritance
+	class B : A //cyclic inheritance
+	class Example: NotAStudentInScope //scope error
+ 
 data
     namespace group "http://MDSD.dk/our_group_data#"
     from "http://sdu.dk#" [amountOfGlasses, hasName, hasCourse, Student, Engineer, Mathematician, hasGlasses, hasCalculator]
@@ -55,8 +54,8 @@ data
 		amountOfGlasses 1
 		hasCourse "Machine Learning" 
 		hasCourse "MDSD"
-	 //bobby:
-		//hasName "Bobby" 
+	 bobby:
+		hasName "Bobby" 
 		 
 query 
 	from uni "http://sdu.dk#"
