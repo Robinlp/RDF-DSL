@@ -12,6 +12,10 @@ import org.xtext.example.rdfdsl.rdfDsl.PropertyBinding
 import org.xtext.example.rdfdsl.rdfDsl.QueryInstance
 import org.xtext.example.rdfdsl.rdfDsl.RdfDslPackage
 import org.xtext.example.rdfdsl.rdfDsl._Class
+import org.xtext.example.rdfdsl.rdfDsl._Property
+import org.xtext.example.rdfdsl.rdfDsl.Binding
+import org.xtext.example.rdfdsl.rdfDsl.From
+import org.xtext.example.rdfdsl.rdfDsl.DataProperty
 
 /**
  * This class contains custom validation rules. 
@@ -24,7 +28,7 @@ class RdfDslValidator extends AbstractRdfDslValidator {
 		"elif", "else", "except", "False", "finally", "for", "from", "global", "if", "import", "in", "is", "lambda",
 		"None", "nonlocal", "not", "or", "pass", "raise", "return", "True", "try", "while", "with", "yield"]
 	public List<String> allBindings = new ArrayList();
-
+	
 	@Check
 	def idContainsKeyword(QueryInstance qins) {
 		if (Python_Keywords.contains(qins.id)) {
@@ -44,7 +48,7 @@ class RdfDslValidator extends AbstractRdfDslValidator {
 
 	/*Find all bindings and add them to the allBindings list so bindingHasBeenDefined can use the list */
 	@Check
-	def findFindings(DataNamespace dataNs) {
+	def findBindings(DataNamespace dataNs) {
 		allBindings.clear()
 		for (binding : dataNs.bindings) {
 			for (varL : binding.varList) {
@@ -74,6 +78,54 @@ class RdfDslValidator extends AbstractRdfDslValidator {
 			}
 			seen.add(c)
 			c = c.superClass
+		}
+	}
+	
+	@Check
+	def classNameContainsKeyword(_Class c) {
+		if (Python_Keywords.contains(c.name)) {
+			error('Name cannot contain python keywords', RdfDslPackage.Literals._CLASS__NAME, "Keyword Error")
+		}
+	}
+	
+	@Check
+	def propertyNameContainsKeyword(_Property p) {
+		if (Python_Keywords.contains(p.name)) {
+			error('Name cannot contain python keywords', RdfDslPackage.Literals._PROPERTY__NAME, "Keyword Error")
+		}
+	}
+	
+	@Check
+	def bindingsContainsKeyword(Binding b) {
+		for (bind : b.varList) {
+			if (Python_Keywords.contains(bind)) {
+				error('Parameters cannot contain python keywords. Error at: ' + bind,
+					RdfDslPackage.Literals.BINDING__VAR_LIST, "Keyword Error")
+			}
+		}
+	}
+	
+	@Check
+	def propertyBindingNameContainsKeyword(PropertyBinding pb) {
+		if (Python_Keywords.contains(pb.name)) {
+			error('Name cannot contain python keywords', RdfDslPackage.Literals.PROPERTY_BINDING__NAME, "Keyword Error")
+		}
+	}
+	
+	@Check
+	def dataPropertyPropContainsKeyword(DataProperty dp) {
+		if (Python_Keywords.contains(dp.prop)) {
+			error('Name cannot contain python keywords', RdfDslPackage.Literals.DATA_PROPERTY__PROP, "Keyword Error")
+		}
+	}
+	
+	@Check
+	def fromContainsKeyword(From f) {
+		for (p : f.listProp) {
+			if (Python_Keywords.contains(p)) {
+				error('Parameters cannot contain python keywords. Error at: ' + p,
+					RdfDslPackage.Literals.FROM__LIST_PROP, "Keyword Error")
+			}
 		}
 	}
 
