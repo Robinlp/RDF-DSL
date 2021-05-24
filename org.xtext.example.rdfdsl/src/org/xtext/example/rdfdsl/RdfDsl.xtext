@@ -58,7 +58,7 @@ PropertyBinding:
 	name=ID ':' property+=DataProperty+;
 
 DataProperty:
-	prop=ID ((value+=ID (',' value+=ID)*) | sValue=SimpleValue) // TODO: skal nok laves lidt bedre
+	prop=ID ((value+=ID (',' value+=ID)*) | sValue=SimpleValue)
 ;
 
 SimpleValue:
@@ -107,7 +107,6 @@ MultDiv returns Expression:
 Primary returns Expression:
 	Number | Parenthesis
 ;
-
 
 Parenthesis returns Expression:
 	'(' Exp ')'
