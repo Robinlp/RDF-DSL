@@ -26,7 +26,7 @@ Class returns _Class:
 	{_Class}'class' name=ID (':' superClass=[_Class])? (properties+=Property)*;
 
 Property returns _Property:
-	'property' name=ID type=(ObjectType | SimpleType) (cardinality=Cardinality)?; // default card is 0..*
+	'property' name=ID type=(ObjectType | SimpleType) (cardinality=Cardinality)?; // default cardinality is 0..*
 
 ObjectType returns Type:
 	{ClassRef} id=ID;
