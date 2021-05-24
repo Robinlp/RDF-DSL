@@ -17,10 +17,11 @@ model namespace uni "http://sdu.dk"
   
 data
     namespace group "http://MDSD.dk/our_group_data#"
-    from "http://sdu.dk#" [amountOfGlasses, hasName, hasCourse, Student, Engineer, Mathematician, hasGlasses, hasCalculator]
+    from "http://sdu.dk#" [amountOfGlasses, hasName, hasCourse, Student, Engineer, Mathematician, hasGlasses, hasCalculator/*,else */]
     
     robin, emil, jeppe, nick, sadik is Engineer
 	hugo is Mathematician
+	//else is Student
 	
 	sadik:
 		hasName "Sadik"
@@ -56,7 +57,12 @@ data
 		amountOfGlasses 1
 		hasCourse "Machine Learning" 
 		hasCourse "MDSD"
-
+/*
+	bobby: //property binding error
+		hasName "Bobby"
+	else: //python keyword
+		hasName "else"
+*/
 		 
 query 
 	from uni "http://sdu.dk#"
