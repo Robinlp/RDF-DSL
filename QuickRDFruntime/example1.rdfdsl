@@ -1,1 +1,90 @@
 model namespace uni "http://sdu.dk"
+	class Student
+		property amountOfGlasses Integer
+	 		cardinality 0 .. *
+	 	property hasGlasses Boolean
+	 	property hasName String
+	 	property hasCourse String
+	class Engineer : Student 
+	class Mathematician: Student
+		property hasCalculator Boolean
+	class Physicist : Mathematician 
+	//class else
+		//property else String
+	//class A : B //cyclic inheritance
+	//class B : A //cyclic inheritance
+	//class Example: NotAStudentInScope //scope error
+  
+data
+    namespace group "http://MDSD.dk/our_group_data#"
+    from "http://sdu.dk#" [amountOfGlasses, hasName, hasCourse, Student, Engineer, Mathematician, hasGlasses, hasCalculator]
+    
+    robin, emil, jeppe, nick, sadik is Engineer
+	hugo is Mathematician
+	
+	sadik:
+		hasName "Sadik"
+		hasGlasses True
+		amountOfGlasses 1
+		hasCourse "V&V" 
+		hasCourse "MDSD"
+	nick:
+		hasName "Nick" 
+		hasGlasses True
+		amountOfGlasses 1
+		hasCourse "V&V"  
+		hasCourse "MDSD"
+	hugo:
+		hasName "Hugo"
+		hasCalculator True
+	jeppe:
+		hasName "Jeppe"
+		hasGlasses True
+		amountOfGlasses 50
+		hasCourse "V&V" 
+		hasCourse "Functional Programming"
+		hasCourse "MDSD" 
+	emil:
+		hasName "Emil" 
+		hasGlasses True
+		amountOfGlasses 1
+		hasCourse "V&V"
+		hasCourse "MDSD"
+	robin:
+		hasName "Robin"
+		hasGlasses True
+		amountOfGlasses 1
+		hasCourse "Machine Learning" 
+		hasCourse "MDSD"
+
+		 
+query 
+	from uni "http://sdu.dk#"
+	from people "http://MDSD.dk/our_group_data#"
+		qname1
+			SELECT name
+			 WHERE
+			 	student uni:hasCourse "V&V"
+				student uni:hasName name
+		
+		qname2
+			SELECT Student
+			 WHERE 
+			 	Student uni:hasGlasses True
+			 	
+		find_student_by_name name //parameter, not argument
+			SELECT Student
+			 WHERE 
+			 	Student uni:hasName name
+			
+		qname4 sadik
+			SELECT Student
+			 WHERE 
+			 	Student uni:hasName sadik
+ 		
+ 		amountOfGlasses
+ 			SELECT Student
+ 			WHERE 
+ 				Student uni:amountOfGlasses 10+10+20/2+2*10+30-20-2*5 + ((3*9+1)*0)
+			 
+	 	
