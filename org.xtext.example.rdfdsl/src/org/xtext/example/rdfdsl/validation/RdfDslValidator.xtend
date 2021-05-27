@@ -57,7 +57,7 @@ class RdfDslValidator extends AbstractRdfDslValidator {
 		}
 	}
 
-	/*this method will validate if the proberty binding has been defined as a binding first */
+	/*this method will validate if the property binding has been defined as a binding first */
 	@Check
 	def bindingHasBeenDefined(PropertyBinding pb) {
 		// System.out.println(allBindings)
